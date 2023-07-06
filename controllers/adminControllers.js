@@ -1,5 +1,4 @@
-const products = [];
-
+const Product=require('../models/product');
 exports.getAdminController=(req, res, next)=>{
     res.render('add-product', {
       pageTitle: 'Add Product',
@@ -11,17 +10,20 @@ exports.getAdminController=(req, res, next)=>{
   };
 
 exports.postAdminController=(req, res, next) => {
-    products.push({ title: req.body.title });
+    const product=new Product(req.body.title);
+    product.save();
     res.redirect('/');
   };
 
 exports.shopControllers=(req, res, next) => {
-  res.render('shop', {
-    prods: products,
-    pageTitle: 'Shop',
-    path: '/',
-    hasProducts: products.length > 0,
-    activeShop: true,
-    productCSS: true
+  Product.fetchAll(products=>{
+    res.render('shop', {
+      prods: products,
+      pageTitle: 'Shop',
+      path: '/',
+      hasProducts: products.length > 0,
+      activeShop: true,
+      productCSS: true
+    });
   });
-}
+};
