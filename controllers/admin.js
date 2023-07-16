@@ -16,7 +16,7 @@ exports.postAddProduct = (req, res, next) => {
   Product.create({
     title: title,
     price: price,
-    imageUrl: imageUrl,
+    url: imageUrl,
     description: description
   })
     .then(result => {
